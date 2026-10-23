@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=1100">
+<title>薄肌女生版 · 居家自重训练卡</title>
+<style>
+  :root{
+    --ink:#2B2B2B; --ink2:#6E6A66; --ink3:#9A948E;
+    --line:#E5E0DA; --paper:#FAF8F5;
+    --accent:#C0563F;
+    --leg:#C0563F; --back:#3F7C8C; --push:#8A7B4F; --core:#5F8A5A; --rest:#9A948E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    background:#EFECE8;
+    font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink); padding:26px 0; -webkit-font-smoothing:antialiased;
+  }
+  .toolbar{position:fixed; top:12px; right:16px; z-index:99; display:flex; gap:8px}
+  .toolbar button{font-family:inherit; font-size:12.5px; padding:7px 13px; border-radius:20px;
+    border:1px solid var(--line); background:#fff; color:var(--ink2); cursor:pointer;
+    box-shadow:0 2px 8px rgba(0,0,0,.06)}
+  .toolbar button:hover{background:var(--paper); color:var(--ink)}
+
+  .page{
+    width:733px; min-height:1040px; margin:0 auto 24px;
+    background:#fff; padding:30px 32px;
+    box-shadow:0 4px 24px rgba(0,0,0,.08); position:relative;
+  }
+
+  /* ---------- 页眉 ---------- */
+  .head{display:flex; align-items:flex-end; justify-content:space-between;
+    border-bottom:2px solid var(--ink); padding-bottom:10px; margin-bottom:16px}
+  .head h1{font-size:24px; letter-spacing:.5px; font-weight:700}
+  .head .sub{font-size:11.8px; color:var(--ink2); margin-top:4px; letter-spacing:.2px}
+  .head .brand{font-size:11px; color:var(--ink3); text-align:right; line-height:1.6}
+  .head .brand b{display:block; font-size:12.5px; color:var(--accent); letter-spacing:1px}
+
+  h2{font-size:13px; letter-spacing:1.8px; color:var(--ink2); font-weight:600;
+    margin:11px 0 6px; display:flex; align-items:center; gap:8px}
+  h2::after{content:""; flex:1; height:1px; background:var(--line)}
+  h2 .n{display:inline-flex; width:18px; height:18px; border-radius:50%;
+    background:var(--ink); color:#fff; font-size:10px; align-items:center;
+    justify-content:center; letter-spacing:0; font-weight:500}
+
+  /* ---------- 档案条 ---------- */
+  .profile{display:grid; grid-template-columns:repeat(4,1fr); gap:1px;
+    background:var(--line); border:1px solid var(--line); border-radius:7px;
+    overflow:hidden; margin-bottom:8px}
+  .profile div{background:var(--paper); padding:9px 11px}
+  .profile .k{font-size:10px; color:var(--ink3); letter-spacing:.4px}
+  .profile .v{font-size:15px; font-weight:600; margin-top:2px; letter-spacing:.2px}
+  .profile .v small{font-size:10.5px; font-weight:400; color:var(--ink2)}
+  .private{transition:opacity .15s}
+  body.hide-private .private{opacity:0; visibility:hidden}
+
+  /* ---------- 周计划 ---------- */
+  .week{display:grid; grid-template-columns:1fr 1fr; gap:9px}
+  .day{border:1px solid var(--line); border-radius:8px; overflow:hidden;
+    display:flex; flex-direction:column}
+  .day .top{padding:7px 11px; color:#fff; display:flex; align-items:baseline; gap:7px}
+  .day .top .dow{font-size:14px; font-weight:700; letter-spacing:.4px}
+  .day .top .tag{font-size:10.5px; opacity:.88}
+  .day .top .pri{margin-left:auto; font-size:9.5px; background:rgba(255,255,255,.22);
+    padding:2px 6px; border-radius:9px; letter-spacing:.3px}
+  .day ul{list-style:none; padding:7px 11px 8px; flex:1}
+  .day li{font-size:11.5px; line-height:1.6; display:flex; gap:7px}
+  .day li .dot{width:5px; height:5px; border-radius:50%; margin-top:6px; flex:none}
+  .day li .sets{margin-left:auto; color:var(--ink3); font-size:10.5px; flex:none; padding-left:5px}
+  .day li.star{font-weight:600}
+  .day li.note{color:var(--ink2); font-size:10.8px; line-height:1.46; margin-top:2px}
+  .day li.note .dot{background:#D8CFC6}
+
+  .leg .top{background:var(--leg)}   .leg .dot{background:var(--leg)}
+  .back .top{background:var(--back)} .back .dot{background:var(--back)}
+  .push .top{background:var(--push)} .push .dot{background:var(--push)}
+  .rest .top{background:var(--rest)} .rest .dot{background:var(--rest)}
+
+  /* ---------- 流程条 ---------- */
+  .flow{display:flex; border:1px solid var(--line); border-radius:7px; overflow:hidden}
+  .flow div{flex:1; padding:8px 10px; border-right:1px solid var(--line); background:var(--paper)}
+  .flow div:last-child{border-right:none}
+  .flow .k{font-size:10px; color:var(--ink3)}
+  .flow .v{font-size:12.5px; font-weight:600; margin-top:2px}
+  .flow div.hot{background:#FDF1EE}
+  .flow div.hot .v{color:var(--accent)}
+
+  /* ---------- 阶梯 ---------- */
+  .ladder{border:1px solid var(--line); border-radius:8px; overflow:hidden; margin-bottom:10px}
+  .ladder .lh{padding:7px 12px; background:var(--paper); border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:8px}
+  .ladder .lh .code{width:20px; height:20px; border-radius:5px; color:#fff;
+    font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center}
+  .ladder .lh .name{font-size:13px; font-weight:600}
+  .ladder .lh .hint{font-size:10.5px; color:var(--ink3); margin-left:auto}
+  .ladder ol{list-style:none; padding:0}
+  .ladder li{display:flex; align-items:center; gap:9px; padding:5px 12px;
+    border-bottom:1px solid #F2EEE9; font-size:11.8px}
+  .ladder li:last-child{border-bottom:none}
+  .ladder li:nth-child(odd){background:#FDFCFA}
+  .ladder .lv{width:17px; height:17px; border-radius:50%; border:1.5px solid var(--line);
+    font-size:9.5px; color:var(--ink3); display:flex; align-items:center;
+    justify-content:center; flex:none; font-weight:600}
+  .ladder .box{width:12px; height:12px; border:1.5px solid var(--line); border-radius:3px;
+    margin-left:auto; flex:none; background:#fff}
+  .ladder .mv{flex:1}
+  .ladder .sets{color:var(--ink3); font-size:10.5px; width:58px; text-align:right; flex:none}
+  .ladder .sub{padding:6px 12px; font-size:11px; color:var(--ink2);
+    background:var(--paper); border-top:1px dashed var(--line); line-height:1.65}
+
+  /* ---------- 旋钮 ---------- */
+  .knobs{display:grid; grid-template-columns:repeat(3,1fr); gap:8px}
+  .knob{border:1px solid var(--line); border-radius:7px; padding:9px 11px; background:var(--paper)}
+  .knob .t{font-size:12px; font-weight:600}
+  .knob .d{font-size:11px; color:var(--ink2); margin-top:3px; line-height:1.55}
+  .knob .p{font-size:9.8px; color:var(--accent); margin-top:4px; letter-spacing:.3px}
+
+  /* ---------- RPE ---------- */
+  .rpe{display:grid; grid-template-columns:repeat(4,1fr); gap:7px}
+  .rpe div{border:1px solid var(--line); border-radius:7px; padding:8px 10px; text-align:center}
+  .rpe .n{font-size:18px; font-weight:700}
+  .rpe .s{font-size:10.3px; color:var(--ink2); margin-top:2px; line-height:1.45}
+  .rpe div.target{background:#FDF1EE; border-color:#EBC4BA}
+  .rpe div.target .n{color:var(--accent)}
+  .rpe div.target .s{color:var(--accent); font-weight:600}
+
+  /* ---------- 表格 ---------- */
+  table{width:100%; border-collapse:collapse; font-size:11.5px}
+  th{background:var(--ink); color:#fff; font-weight:500; padding:6px 8px;
+    text-align:left; font-size:10.5px; letter-spacing:.4px}
+  td{border-bottom:1px solid #F0ECE7; padding:6px 8px; color:var(--ink2)}
+  tr:first-child td{color:var(--ink3); font-style:italic}
+
+  /* ---------- 提示 ---------- */
+  .tips{background:var(--paper); border:1px solid var(--line); border-radius:8px;
+    padding:10px 13px; font-size:11.4px; line-height:1.72; color:var(--ink2)}
+  .tips b{color:var(--accent); font-weight:600}
+  .tips .row{display:flex; gap:7px}
+  .tips .row .no{color:var(--accent); font-weight:600; flex:none}
+
+  .foot{margin-top:16px; padding-top:9px; border-top:1px solid var(--line);
+    display:flex; justify-content:space-between; font-size:10px; color:var(--ink3)}
+
+  @page{size:A4; margin:8mm}
+  @media print{
+    body{background:#fff; padding:0}
+    .toolbar{display:none}
+    .page{box-shadow:none; margin:0; page-break-after:always;
+      width:733px; min-height:0; padding:0}
+    .page:last-child{page-break-after:auto}
+  }
+</style>
+</head>
+<body>
+
+<div class="toolbar">
+  <button onclick="document.body.classList.toggle('hide-private')">隐藏 / 显示个人信息</button>
+  <button onclick="window.print()">打印 / 存为 PDF</button>
+</div>
+
+<!-- ============================= 第 1 页 ============================= -->
+<section class="page">
+  <div class="head">
+    <div>
+      <h1>薄肌女生版 · 居家自重训练卡</h1>
+      <div class="sub">下肢 &gt; 核心 &gt; 背 &gt; 上肢　·　一周三次，每次 30–40 分钟　·　唯一不可妥协：渐进超负荷</div>
+    </div>
+    <div class="brand"><b>薄肌女生版</b>打印后手写你的数字</div>
+  </div>
+
+  <h2><span class="n">1</span>我的档案与每日数字</h2>
+  <div class="profile">
+    <div><div class="k">年龄 / 身高 / 体重</div><div class="v private">____ 岁 · ____ cm · ____ kg<small> BMI ____</small></div></div>
+    <div><div class="k">方向</div><div class="v">增肌<small>，不是减脂</small></div></div>
+    <div><div class="k">每日热量</div><div class="v">____<small> kcal · 目标体重×30</small></div></div>
+    <div><div class="k">蛋白质目标</div><div class="v">体重×1.6–1.8<small> g/天 · 分 3–4 餐</small></div></div>
+  </div>
+  <div class="profile">
+    <div><div class="k">腰围（现 / 目标）</div><div class="v private">____ / ____<small> cm</small></div></div>
+    <div><div class="k">体脂红线</div><div class="v">20–23%<small> · 不低于 20%</small></div></div>
+    <div><div class="k">补剂</div><div class="v">肌酸 3–5g<small> · 维 D 800IU</small></div></div>
+    <div><div class="k">器械</div><div class="v">哑铃 ×2<small> · 弹力带 · 自重</small></div></div>
+  </div>
+
+  <h2><span class="n">2</span>每周三次（周一 / 周三 / 周五，每次 30–40 分钟）</h2>
+  <div class="week">
+    <div class="day leg">
+      <div class="top"><span class="dow">Day 1 · 周一</span><span class="tag">下肢 + 臀</span><span class="pri">优先 1</span></div>
+      <ul>
+        <li><span class="dot"></span>A 深蹲阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>B 臀桥阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>髋铰链：徒手 → 单腿罗马尼亚硬拉<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>蚌式开合<span class="sets">3×15/侧</span></li>
+        <li><span class="dot"></span>台阶上步<span class="sets">3×10/侧</span></li>
+        <li class="note"><span class="dot"></span>下肢是全身最大肌群，保骨密度、保代谢，40 岁后第一优先级</li>
+      </ul>
+    </div>
+
+    <div class="day back">
+      <div class="top"><span class="dow">Day 2 · 周三</span><span class="tag">背 + 后肩</span><span class="pri">优先 3</span></div>
+      <ul>
+        <li><span class="dot"></span>弹力带下拉（绑门框上方）<span class="sets">3×12</span></li>
+        <li><span class="dot"></span>弹力带划船（绑门把腰高）<span class="sets">3×12/侧</span></li>
+        <li class="star"><span class="dot"></span>面拉（绑门把，眼高）★<span class="sets">3×15–20</span></li>
+        <li><span class="dot"></span>反向飞鸟（2kg 哑铃）<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>招财猫（2kg 哑铃）<span class="sets">2×15</span></li>
+        <li class="note"><span class="dot"></span>带子太松就对折使用；做不到 8 次就站近一点</li>
+      </ul>
+    </div>
+
+    <div class="day push">
+      <div class="top"><span class="dow">Day 3 · 周五</span><span class="tag">推 + 核心</span><span class="pri">优先 2 / 4</span></div>
+      <ul>
+        <li><span class="dot"></span>C 俯卧撑阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>哑铃肩推（2kg）<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>侧平举（2kg）<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>二头弯举（2kg）<span class="sets">2×15</span></li>
+        <li><span class="dot"></span>D 核心阶梯（选 2 个）<span class="sets">各 3 组</span></li>
+        <li class="note"><span class="dot"></span>核心不是腹肌，是躯干稳定——护腰、护盆底</li>
+      </ul>
+    </div>
+
+    <div class="day rest">
+      <div class="top"><span class="dow">其余四天</span><span class="tag">恢复日</span></div>
+      <ul>
+        <li><span class="dot"></span>八段锦（照常，算恢复日）</li>
+        <li><span class="dot"></span>饭后散步，不额外加力量</li>
+        <li class="note"><span class="dot"></span>肌肉是在休息时长的，不是练时长的。八段锦不涨肌肉、不刺激骨密度，留着但不能替代那三天</li>
+      </ul>
+    </div>
+  </div>
+
+  <h2><span class="n">3</span>每次训练的流程（30–40 分钟）</h2>
+  <div class="flow">
+    <div><div class="k">① 热身</div><div class="v">5 分钟</div></div>
+    <div><div class="k">② 主体</div><div class="v">5 个动作</div></div>
+    <div><div class="k">③ 组间休息</div><div class="v">大动作 60–90 秒<br>小动作 45 秒</div></div>
+    <div><div class="k">④ 拉伸</div><div class="v">静态，不弹震</div></div>
+    <div class="hot"><div class="k">⑤ 呼吸</div><div class="v">发力呼气，全程不憋气</div></div>
+  </div>
+
+  <h2><span class="n">4</span>四句必须记住的话</h2>
+  <div class="tips">
+    <div class="row"><span class="no">01</span><span><b>重量不是唯一的数字。</b>次数、节奏、杠杆、幅度、停顿、组数，动任何一个都算一次渐进超负荷。</span></div>
+    <div class="row"><span class="no">02</span><span><b>前三周体重可能涨 0.5–1.5kg</b>，是肌肉储水和糖原，不是胖。这时候开始少吃，整个计划就废了。</span></div>
+    <div class="row"><span class="no">03</span><span><b>2kg 哑铃只够练小肌群。</b>自重深蹲已相当于扛着 30 多公斤，多握 2kg 负荷变化不到 5%，肌肉收不到信号。</span></div>
+    <div class="row"><span class="no">04</span><span>别盯体重，盯这四条：动作比上周重了多少 · 爬楼喘不喘 · 提东西费不费劲 · 久坐一天腰还疼不疼。</span></div>
+  </div>
+
+  <div class="foot"><span>薄肌女生版 · thin-muscle-women</span><span>第 1 页 / 共 4 页</span></div>
+</section>
+
+<!-- ============================= 第 2 页 ============================= -->
+<section class="page">
+  <div class="head">
+    <div>
+      <h1>阶梯 A · B　下肢与臀</h1>
+      <div class="sub">优先级第一　·　没有重量可以加，就把"级"往上推　·　勾选 = 你现在所在的级别</div>
+    </div>
+    <div class="brand"><b>升级判定</b>能做满次数上限且 RPE 只有 7–8 → 升下一级</div>
+  </div>
+
+  <div class="ladder">
+    <div class="lh"><span class="code" style="background:var(--leg)">A</span><span class="name">深蹲阶梯</span><span class="hint">股四头 · 臀 · 骨密度</span></div>
+    <ol>
+      <li><span class="lv">1</span><span class="mv">箱式深蹲（坐椅子再站起）</span><span class="sets">3×12</span><span class="box"></span></li>
+      <li><span class="lv">2</span><span class="mv">自重深蹲</span><span class="sets">3×12</span><span class="box"></span></li>
+      <li><span class="lv">3</span><span class="mv">自重深蹲，3 秒下放</span><span class="sets">3×10</span><span class="box"></span></li>
+      <li><span class="lv">4</span><span class="mv">保加利亚分腿蹲（后脚放矮台阶，扶墙）</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">5</span><span class="mv">保加利亚分腿蹲（后脚放椅子）</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">6</span><span class="mv">保加利亚分腿蹲，3 秒下放</span><span class="sets">3×8/侧</span><span class="box"></span></li>
+      <li><span class="lv">7</span><span class="mv">单腿箱式深蹲（坐到椅子，单腿站起）</span><span class="sets">3×8/侧</span><span class="box"></span></li>
+      <li><span class="lv">8</span><span class="mv">虾式深蹲（扶墙辅助）</span><span class="sets">3×6/侧</span><span class="box"></span></li>
+    </ol>
+    <div class="sub">最容易错：膝盖内扣。第一周对着镜子做一次，确认膝盖朝脚尖方向。</div>
+  </div>
+
+  <div class="ladder">
+    <div class="lh"><span class="code" style="background:var(--leg)">B</span><span class="name">臀桥 / 髋铰链阶梯</span><span class="hint">臀 · 腘绳肌 · 腰椎稳定</span></div>
+    <ol>
+      <li><span class="lv">1</span><span class="mv">双腿臀桥</span><span class="sets">3×15</span><span class="box"></span></li>
+      <li><span class="lv">2</span><span class="mv">双腿臀桥 + 顶峰停 2 秒</span><span class="sets">3×15</span><span class="box"></span></li>
+      <li><span class="lv">3</span><span class="mv">单腿臀桥</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">4</span><span class="mv">单腿臀桥 + 顶峰停 3 秒</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">5</span><span class="mv">肩胛垫高（沙发 / 台阶）双腿臀桥</span><span class="sets">3×15</span><span class="box"></span></li>
+      <li><span class="lv">6</span><span class="mv">肩胛垫高单腿臀桥</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">7</span><span class="mv">肩胛垫高单腿臀桥 + 2kg 哑铃压髋</span><span class="sets">3×12/侧</span><span class="box"></span></li>
+    </ol>
+    <div class="sub">另一条链（髋铰链）：徒手髋铰链（棍子贴头·背·臀三点）3×12 → 单腿罗马尼亚硬拉扶墙 3×10/侧 → 不扶墙 → 单腿硬拉触地。</div>
+  </div>
+
+  <h2>为什么下肢排第一</h2>
+  <div class="tips">
+    <div class="row"><span class="no">01</span><span>女性围绝经期后雌激素下降，脂肪会从臀腿皮下搬进内脏和腰腹，同时<b>腰椎与股骨颈骨密度加速流失</b>。</span></div>
+    <div class="row"><span class="no">02</span><span>下肢负重给股骨颈和腰椎施加机械负荷，直接刺激骨形成。随机对照试验显示：<b>绝经后女性高强度抗阻训练后，骨密度不降反增</b>。</span></div>
+    <div class="row"><span class="no">03</span><span>下肢是人体最大肌群，对基础代谢影响最大。练腿不是为了蜜桃臀，是为了 <b>60 岁不骨折、不塌陷</b>。</span></div>
+  </div>
+
+  <h2>本周下肢级别记录</h2>
+  <table>
+    <thead><tr><th style="width:90px">日期</th><th style="width:150px">阶梯 + 级数</th><th style="width:100px">次数 × 组</th><th style="width:60px">RPE</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td>10-17</td><td>A2 自重深蹲（示例）</td><td>12 × 3</td><td>7</td><td>膝盖有点内扣，下次注意</td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot"><span>薄肌女生版 · thin-muscle-women</span><span>第 2 页 / 共 4 页</span></div>
+</section>
+
+<!-- ============================= 第 3 页 ============================= -->
+<section class="page">
+  <div class="head">
+    <div>
+      <h1>阶梯 C · D · E　上肢与核心</h1>
+      <div class="sub">优先级：核心 2 · 背 3 · 上肢 4　·　勾选 = 你现在所在的级别</div>
+    </div>
+    <div class="brand"><b>升级判定</b>能做满次数上限且 RPE 只有 7–8 → 升下一级</div>
+  </div>
+
+  <div class="ladder">
+    <div class="lh"><span class="code" style="background:var(--core)">D</span><span class="name">核心阶梯</span><span class="hint">优先 2　躯干稳定 · 护腰 · 盆底</span></div>
+    <ol>
+      <li><span class="lv">1</span><span class="mv">死虫式（只伸腿）</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">2</span><span class="mv">死虫式（手脚同伸）</span><span class="sets">3×10/侧</span><span class="box"></span></li>
+      <li><span class="lv">3</span><span class="mv">死虫式，4 秒伸 4 秒收</span><span class="sets">3×8/侧</span><span class="box"></span></li>
+      <li><span class="lv">4</span><span class="mv">跪姿平板支撑</span><span class="sets">3×30 秒</span><span class="box"></span></li>
+      <li><span class="lv">5</span><span class="mv">标准平板支撑</span><span class="sets">3×30→45 秒</span><span class="box"></span></li>
+      <li><span class="lv">6</span><span class="mv">平板支撑交替抬手</span><span class="sets">3×30 秒</span><span class="box"></span></li>
+    </ol>
+    <div class="sub">撑到 60 秒就升难度，不要继续加时间——超过 2 分钟是耐力表演，不是练肌肉。</div>
+  </div>
+
+  <div class="ladder">
+    <div class="lh"><span class="code" style="background:var(--back)">E</span><span class="name">背部（弹力带 + 2kg 哑铃）</span><span class="hint">优先 3　体态 · 圆肩 · 头前伸</span></div>
+    <ol>
+      <li><span class="lv">·</span><span class="mv">弹力带下拉（绑门框上方）</span><span class="sets">3×12</span><span class="box"></span></li>
+      <li><span class="lv">·</span><span class="mv">弹力带划船（绑门把，腰高）</span><span class="sets">3×12/侧</span><span class="box"></span></li>
+      <li><span class="lv">★</span><span class="mv"><b>面拉</b>（绑门把，眼睛高度）—— 体态关键动作</span><span class="sets">3×15–20</span><span class="box"></span></li>
+      <li><span class="lv">·</span><span class="mv">反向飞鸟（2kg 哑铃）</span><span class="sets">3×15</span><span class="box"></span></li>
+      <li><span class="lv">·</span><span class="mv">招财猫（2kg 哑铃）—— 肩袖保健</span><span class="sets">2×15</span><span class="box"></span></li>
+      <li><span class="lv">·</span><span class="mv">二头弯举（2kg 哑铃，高次数慢速）</span><span class="sets">2×15</span><span class="box"></span></li>
+    </ol>
+    <div class="sub">弹力带阻力未知，用 RPE 自测：能轻松做 15 次以上就把带子<b>对折</b>（阻力翻倍）；做不到 8 次就站近一点。</div>
+  </div>
+
+  <div class="ladder">
+    <div class="lh"><span class="code" style="background:var(--push)">C</span><span class="name">俯卧撑阶梯</span><span class="hint">优先 4　胸 · 肩前束 · 手臂线条</span></div>
+    <ol>
+      <li><span class="lv">1</span><span class="mv">推墙</span><span class="sets">3×15</span><span class="box"></span></li>
+      <li><span class="lv">2</span><span class="mv">推桌子 / 台面</span><span class="sets">3×12</span><span class="box"></span></li>
+      <li><span class="lv">3</span><span class="mv">推沙发（更低）</span><span class="sets">3×12</span><span class="box"></span></li>
+      <li><span class="lv">4</span><span class="mv">跪姿俯卧撑</span><span class="sets">3×10</span><span class="box"></span></li>
+      <li><span class="lv">5</span><span class="mv">跪姿俯卧撑，3 秒下放</span><span class="sets">3×8</span><span class="box"></span></li>
+      <li><span class="lv">6</span><span class="mv">标准俯卧撑（做不到就退回 5 级）</span><span class="sets">3×6→10</span><span class="box"></span></li>
+      <li><span class="lv">7</span><span class="mv">脚垫高俯卧撑</span><span class="sets">3×10</span><span class="box"></span></li>
+    </ol>
+  </div>
+
+  <h2>本周核心 / 上肢记录</h2>
+  <table>
+    <thead><tr><th style="width:90px">日期</th><th style="width:150px">阶梯 + 级数</th><th style="width:100px">次数 × 组</th><th style="width:60px">RPE</th><th>备注</th></tr></thead>
+    <tbody>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <div class="foot"><span>薄肌女生版 · thin-muscle-women</span><span>第 3 页 / 共 4 页</span></div>
+</section>
+
+<!-- ============================= 第 4 页 ============================= -->
+<section class="page">
+  <div class="head">
+    <div>
+      <h1>自重进阶的六个旋钮</h1>
+      <div class="sub">重量不是唯一的数字　·　每动一个旋钮，就是一次渐进超负荷</div>
+    </div>
+    <div class="brand"><b>肌肉的逻辑</b>压力变大了，它就只能变大</div>
+  </div>
+
+  <div class="knobs">
+    <div class="knob"><div class="t">① 次数</div><div class="d">8 → 12 → 15 → 20</div><div class="p">先用这个</div></div>
+    <div class="knob"><div class="t">② 节奏</div><div class="d">下放 2 秒 → 3 秒 → 5 秒</div><div class="p">次数到 15 后用</div></div>
+    <div class="knob"><div class="t">③ 杠杆</div><div class="d">双腿 → 单腿；手撑高位 → 低位</div><div class="p">最强的旋钮</div></div>
+    <div class="knob"><div class="t">④ 幅度</div><div class="d">高箱 → 低箱 → 全幅度</div><div class="p">配合杠杆用</div></div>
+    <div class="knob"><div class="t">⑤ 停顿</div><div class="d">底部 / 顶峰停 2 秒 → 3 秒</div><div class="p">消除惯性借力</div></div>
+    <div class="knob"><div class="t">⑥ 组数</div><div class="d">3 组 → 4 组</div><div class="p">最后才用</div></div>
+  </div>
+
+  <h2>怎么判断"练够了"</h2>
+  <div class="rpe">
+    <div><div class="n">7</div><div class="s">有点吃力<br>还能再做 3 个</div></div>
+    <div class="target"><div class="n">8</div><div class="s">吃力<br>还能再做 2 个 ← 目标</div></div>
+    <div><div class="n">9</div><div class="s">很吃力<br>只能再做 1 个</div></div>
+    <div><div class="n">10</div><div class="s">力竭<br>不做这一档</div></div>
+  </div>
+
+  <h2>本周复盘（周五练完填一次）</h2>
+  <table>
+    <thead><tr><th style="width:140px">项目</th><th>内容</th></tr></thead>
+    <tbody>
+      <tr><td>A 深蹲起始级别</td><td></td></tr>
+      <tr><td>B 臀桥起始级别</td><td></td></tr>
+      <tr><td>C 俯卧撑起始级别</td><td></td></tr>
+      <tr><td>D 核心起始级别</td><td></td></tr>
+      <tr><td>本周完成率</td><td>　　　 / 3 次</td></tr>
+      <tr><td>下周调整</td><td>（哪个阶梯升一级）</td></tr>
+      <tr><td>主观感受</td><td>睡眠 / 疲劳 / 经期症状</td></tr>
+    </tbody>
+  </table>
+
+  <h2>围度（每 4 周量一次，固定在经期结束后 3–5 天）</h2>
+  <table>
+    <thead><tr><th>日期</th><th>体重 kg</th><th>腰围 cm</th><th>臀围 cm</th><th>大腿围 cm</th><th>臂围 cm</th></tr></thead>
+    <tbody>
+      <tr><td>__-__-__</td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+      <tr><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+  </table>
+
+  <h2>四条不可妥协</h2>
+  <div class="tips">
+    <div class="row"><span class="no">01</span><span><b>每次都要比上次重一点或多一个。</b>肌肉不在乎你练它的时候酸不酸，它只知道压力变大了就得长大。</span></div>
+    <div class="row"><span class="no">02</span><span><b>不记录就没有渐进超负荷。</b>人脑会忘，记录不会。这是整个系统最容易崩的一环。</span></div>
+    <div class="row"><span class="no">03</span><span><b>体脂不往男生的数字上冲。</b>男版让冲 10–13%，女生照抄可能闭经。你的区间是 20–23%。</span></div>
+    <div class="row"><span class="no">04</span><span><b>瘦不是目标，力量才是。</b>你的肌肉，是你 60 岁以后唯一不会背叛你的资产。</span></div>
+  </div>
+
+  <div class="foot"><span>薄肌女生版 · thin-muscle-women</span><span>第 4 页 / 共 4 页</span></div>
+</section>
+
+</body>
+</html>

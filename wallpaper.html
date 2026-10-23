@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<title>薄肌女生版 · 每日速查卡</title>
+<style>
+  :root{
+    --ink:#26221F; --ink2:#6E6A66; --ink3:#A39C95;
+    --line:#E6E1DB; --paper:#FBF9F6;
+    --accent:#C0563F;
+    --leg:#C0563F; --back:#3F7C8C; --push:#8A7B4F; --rest:#9A948E;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{width:1080px;height:1920px;overflow:hidden}
+  body{
+    font-family:-apple-system,"PingFang SC","Hiragino Sans GB","Microsoft YaHei",sans-serif;
+    color:var(--ink); background:#fff; -webkit-font-smoothing:antialiased;
+    padding:56px 54px 48px; display:flex; flex-direction:column;
+  }
+
+  .top{display:flex; align-items:flex-end; justify-content:space-between;
+    padding-bottom:26px; border-bottom:4px solid var(--ink)}
+  .top h1{font-size:52px; font-weight:800; letter-spacing:1px}
+  .top .sub{font-size:24px; color:var(--ink2); margin-top:12px; letter-spacing:.5px}
+  .top .brand{text-align:right; font-size:22px; color:var(--ink3); line-height:1.7}
+  .top .brand b{display:block; font-size:26px; color:var(--accent); letter-spacing:2px}
+
+  .nums{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:26px 0 28px}
+  .nums div{background:var(--paper); border:1px solid var(--line);
+    border-radius:16px; padding:16px 18px}
+  .nums .k{font-size:20px; color:var(--ink3)}
+  .nums .v{font-size:30px; white-space:nowrap; font-weight:700; margin-top:6px}
+  .nums .v small{font-size:19px; font-weight:400; color:var(--ink2)}
+
+  .days{flex:1; display:flex; flex-direction:column; gap:12px}
+  .day{flex:1; display:flex; align-items:stretch; border-radius:18px; overflow:hidden;
+    border:1px solid var(--line); background:#fff}
+  .day .bar{width:12px; flex:none}
+  .day .when{width:150px; flex:none; padding:18px 14px 18px 20px;
+    display:flex; flex-direction:column; justify-content:center}
+  .day .when .dow{font-size:29px; font-weight:700; letter-spacing:.5px; white-space:nowrap}
+  .day .when .tag{font-size:21px; color:var(--ink2); margin-top:5px}
+  .day ul{flex:1; list-style:none; padding:15px 20px 15px 0;
+    display:flex; flex-direction:column; justify-content:center; gap:3px}
+  .day li{font-size:23px; line-height:1.4; color:var(--ink); display:flex; gap:10px}
+  .day li .dot{width:9px; height:9px; border-radius:50%; margin-top:11px; flex:none}
+  .day li .sets{margin-left:auto; color:var(--ink3); font-size:20px; flex:none}
+  .leg .bar{background:var(--leg)}   .leg .dot{background:var(--leg)}
+  .back .bar{background:var(--back)} .back .dot{background:var(--back)}
+  .push .bar{background:var(--push)} .push .dot{background:var(--push)}
+  .rest .bar{background:var(--rest)} .rest .dot{background:var(--rest)}
+  .rest li{color:var(--ink2)}
+
+  .bottom{margin-top:26px; display:flex; gap:14px}
+  .rpe{flex:none; background:#FDF1EE; border:1px solid #EBC4BA; border-radius:18px;
+    padding:18px 26px; text-align:center; min-width:250px}
+  .rpe .n{font-size:44px; font-weight:800; color:var(--accent); line-height:1}
+  .rpe .s{font-size:21px; color:var(--accent); margin-top:8px; font-weight:600}
+  .quote{flex:1; background:var(--paper); border:1px solid var(--line);
+    border-radius:18px; padding:18px 26px; display:flex; flex-direction:column;
+    justify-content:center; gap:7px}
+  .quote p{font-size:22px; color:var(--ink2); line-height:1.5}
+  .quote p b{color:var(--accent)}
+  .quote .big{font-size:26px; font-weight:700; color:var(--ink); line-height:1.35}
+</style>
+</head>
+<body>
+
+  <div class="top">
+    <div>
+      <h1>薄肌女生版 · 训练速查</h1>
+      <div class="sub">下肢 &gt; 核心 &gt; 背 &gt; 上肢　·　一周三次 · 30–40 分钟</div>
+    </div>
+    <div class="brand"><b>薄肌女生版</b>___ 岁 · ___ / ___</div>
+  </div>
+
+  <div class="nums">
+    <div><div class="k">每日热量</div><div class="v">体重×30<small> kcal</small></div></div>
+    <div><div class="k">蛋白质</div><div class="v">×1.6–1.8<small> g/kg</small></div></div>
+    <div><div class="k">体脂红线</div><div class="v">20–23<small> %</small></div></div>
+    <div><div class="k">腰围</div><div class="v">____<small> / 目标 &lt;80 cm</small></div></div>
+  </div>
+
+  <div class="days">
+    <div class="day leg">
+      <div class="bar"></div>
+      <div class="when"><div class="dow">Day 1 · 周一</div><div class="tag">下肢 + 臀</div></div>
+      <ul>
+        <li><span class="dot"></span>A 深蹲阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>B 臀桥阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>髋铰链 → 单腿罗马尼亚硬拉<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>蚌式开合<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>台阶上步<span class="sets">3×10/侧</span></li>
+      </ul>
+    </div>
+
+    <div class="day back">
+      <div class="bar"></div>
+      <div class="when"><div class="dow">Day 2 · 周三</div><div class="tag">背 + 后肩</div></div>
+      <ul>
+        <li><span class="dot"></span>弹力带下拉（门框上方）<span class="sets">3×12</span></li>
+        <li><span class="dot"></span>弹力带划船（门把腰高）<span class="sets">3×12/侧</span></li>
+        <li><span class="dot"></span>面拉（门把，眼高）★<span class="sets">3×15–20</span></li>
+        <li><span class="dot"></span>反向飞鸟（2kg）<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>招财猫（2kg）<span class="sets">2×15</span></li>
+      </ul>
+    </div>
+
+    <div class="day push">
+      <div class="bar"></div>
+      <div class="when"><div class="dow">Day 3 · 周五</div><div class="tag">推 + 核心</div></div>
+      <ul>
+        <li><span class="dot"></span>C 俯卧撑阶梯（当前级）<span class="sets">3 组</span></li>
+        <li><span class="dot"></span>哑铃肩推 / 侧平举（2kg）<span class="sets">3×15</span></li>
+        <li><span class="dot"></span>二头弯举（2kg）<span class="sets">2×15</span></li>
+        <li><span class="dot"></span>D 核心阶梯（选 2 个）<span class="sets">各 3 组</span></li>
+      </ul>
+    </div>
+
+    <div class="day rest">
+      <div class="bar"></div>
+      <div class="when"><div class="dow">恢复日</div><div class="tag">其余四天</div></div>
+      <ul>
+        <li><span class="dot"></span>八段锦照练 + 饭后散步，不加力量</li>
+        <li><span class="dot"></span>肌肉是在休息时长的，不是练时长的</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="bottom">
+    <div class="rpe">
+      <div class="n">RPE 8</div>
+      <div class="s">吃力，还能再做 2 个</div>
+    </div>
+    <div class="quote">
+      <p>发力呼气，还原吸气，<b>全程不憋气</b>　·　大动作休 60–90 秒</p>
+      <p class="big">每次都要比上次重一点，或多一个。</p>
+      <p>你的肌肉，是你 60 岁以后唯一不会背叛你的资产。</p>
+    </div>
+  </div>
+
+</body>
+</html>
